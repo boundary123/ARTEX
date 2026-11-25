@@ -282,8 +282,8 @@ RUN chmod +x /app/artex /app/start.sh && mkdir -p -m 0700 /app/keys \
 # when the container runs without docker-compose.yml's no-new-privileges.
 RUN find / -xdev -perm /6000 -type f -exec chmod a-s {} +
 COPY skills/ /app/skills/
-# persistence points: data/ (traffic index, task files, transcripts) and keys/ (jwt.key, secret.key, via ARTEX_JWT_KEY_DIR)
-VOLUME ["/app/data", "/app/keys"]
+# persistence points: data/ (traffic index, task files, transcripts) and keys/ (jwt.key, secret.key, via ARTEX_JWT_KEY_DIR).
+# On Railway, persist these by attaching a Railway Volume in the service settings (docker VOLUME is not supported).
 EXPOSE 8787 8788
 ENTRYPOINT ["/app/start.sh"]
 CMD ["-addr", ":8787", "-proxy", ":8788"]
